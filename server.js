@@ -1,12 +1,15 @@
 // ====== Packages and imports ====== //
 const express = require("express");
 const app = express();
+const cors = require('cors');
 require("dotenv").config();
 // get the client
 const mysql = require("mysql2");
+//middleware
+app.use(cors());
 
 // Create the connection to database
-const pool = mysql.createConnection({
+const pool = mysql.createPool({
   host: process.env.MYSQL_HOST,
   user: process.env.MYSQL_USER,
   password: process.env.MYSQL_PASSWORD,
@@ -20,6 +23,18 @@ const pool = mysql.createConnection({
 // Initial setup in Postman
 app.get("/", (req, res) => {
   res.send("Hello, World!");
+});
+
+//teacher-dashboard/student-profiles
+app.get('/teacher-dashboard/student-profiles',(req,res)=>{
+  pool.query(`SELECT name, profile_pic FROM \`missionr_2402-L4FT13-team3\`.student;`, (err,result)=>{
+      if (err){
+          console.log('database error:', err);
+          return res.status(500).json({errorMessage:'an error while fetching the database.'})
+      } else{
+          res.send(result);
+      }
+  })
 });
 
 // ============== PORT ============== //
