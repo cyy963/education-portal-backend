@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 // Create the connection to database
-const pool = mysql.createConnection({
+const pool = mysql.createPool({
   host: process.env.MYSQL_HOST,
   user: process.env.MYSQL_USER,
   password: process.env.MYSQL_PASSWORD,
@@ -31,11 +31,12 @@ app.get("/", (req, res) => {
 app.post("/api/submit-project", (req, res) => {
   console.log("Endpoint reached");
 
-  const studentIndex = 15;
-  const projectIndex = 15;
-  const dateSub = "2024-04-13";
+  const studentIndex = 10;
+  const projectIndex = 14;
+  const dateSub = "2024-04-17";
+  const img = "/images/submittedProjects/makeProject-screenshot.png";
 
-  const query = `UPDATE student_projects SET date_submitted = "${dateSub}" WHERE student_id=${studentIndex} AND project_id=${projectIndex};`;
+  const query = `UPDATE student_projects SET date_submitted = "${dateSub}", submission = "${img}" WHERE student_id=${studentIndex} AND project_id=${projectIndex};`;
 
   pool.execute(query, (err, result) => {
     if (err) {
@@ -51,6 +52,25 @@ app.post("/api/submit-project", (req, res) => {
   });
 
   // res.send("Endpoint hit");
+});
+
+// =========== GET for project submission =========== //
+
+app.get("/api/project-submission", (req, res) => {
+  console.log("Submission endpoint reached");
+
+  const query = `SELECT student.student_id, name, profile_pic, submission, date_submitted FROM student JOIN student_projects ON student.student_id = student_projects.student_id WHERE date_submitted IS NOT NULL;`;
+
+  pool.query(query, (err, result) => {
+    if (err) {
+      console.log("Database error:", err);
+      return res.status(500).json({
+        errorMessage: "An error occured while fetching data from the database.",
+      });
+    } else {
+      res.send(result);
+    }
+  });
 });
 
 // ============== PORT ============== //
