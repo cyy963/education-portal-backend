@@ -37,6 +37,18 @@ app.get('/teacher-dashboard/student-profiles',(req,res)=>{
   })
 });
 
+//teacher-dashboard/progress-tracker
+app.get('/teacher-dashboard/progress-tracker',(req,res)=>{
+  pool.query(`SELECT student_id, name FROM \`missionr_2402-L4FT13-team3\`.student;`, (err,result)=>{
+      if (err){
+          console.log('database error:', err);
+          return res.status(500).json({errorMessage:'an error while fetching the database.'})
+      } else{
+          res.send(result);
+      }
+  })
+});
+
 // ============== PORT ============== //
 const PORT = process.env.PORT;
 app
