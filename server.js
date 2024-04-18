@@ -25,8 +25,8 @@ app.get("/", (req, res) => {
   res.send("Hello, World!");
 });
 
-//teacher-dashboard/student-profiles
-app.get('/teacher-dashboard/student-profiles',(req,res)=>{
+//============ teacher-dashboard/student-profiles ============
+app.get('/students',(req,res)=>{
   pool.query(`SELECT name, profile_pic FROM \`missionr_2402-L4FT13-team3\`.student;`, (err,result)=>{
       if (err){
           console.log('database error:', err);
@@ -37,15 +37,42 @@ app.get('/teacher-dashboard/student-profiles',(req,res)=>{
   })
 });
 
-//teacher-dashboard/progress-tracker
-app.get('/teacher-dashboard/progress-tracker',(req,res)=>{
-  pool.query(`SELECT student_id, name FROM \`missionr_2402-L4FT13-team3\`.student;`, (err,result)=>{
+//============ teacher-dashboard/progress-tracker ============
+//get project_id from project table
+app.get('/projects',(req,res)=>{
+  pool.query(`SELECT project_id FROM \`missionr_2402-L4FT13-team3\`.project;`, (err,result)=>{
       if (err){
           console.log('database error:', err);
           return res.status(500).json({errorMessage:'an error while fetching the database.'})
       } else{
           res.send(result);
       }
+  })
+});
+//get projects results excel from student and student_projects table
+app.get('/project_results',(req,res)=>{
+  pool.query(
+    `SELECT
+      student.student_id,
+      student.name,
+      GROUP_CONCAT(student_projects.project_id) AS completed_projects,
+      COUNT(student_projects.date_completed) AS complete_projects_number
+    FROM
+      student
+    LEFT JOIN
+      student_projects ON student.student_id = student_projects.student_id
+      AND student_projects.date_completed IS NOT NULL
+    GROUP BY
+      student.student_id
+    ORDER BY
+      student.student_id;`, 
+    (err,result)=>{
+    if (err){
+        console.log('database error:', err);
+        return res.status(500).json({errorMessage:'an error while fetching the database.'})
+    } else{
+        res.send(result);
+    }
   })
 });
 
