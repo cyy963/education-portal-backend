@@ -1,25 +1,17 @@
 // ====== Packages and imports ====== //
 const express = require("express");
-const cors = require("cors");
 const app = express();
+const cors = require("cors");
 require("dotenv").config();
-// get the client
-const mysql = require("mysql2");
 
-// ========== Middleware ============= //
+// Route Imports
+const libraryRoutes = require("./routes/libraryRoutes.js");
+const studentProfileViewerRoutes = require("./routes/studentProfileViewerRoutes.js");
+const projectSubmissions = require("./routes/projectSubmissions.js");
+const submitProject = require("./routes/submitProject.js");
+
+// Middleware
 app.use(cors());
-app.use(express.json());
-
-// Create the connection to database
-const pool = mysql.createPool({
-  host: process.env.MYSQL_HOST,
-  user: process.env.MYSQL_USER,
-  password: process.env.MYSQL_PASSWORD,
-  database: process.env.MYSQL_DATABASE,
-  waitForConnections: true, // people can wait
-  connectionLimit: 10, // 10 slots at one time
-  queueLimit: 0, // no limit for queuing
-});
 
 // =========== ENDPOINTS =========== //
 // Initial setup in Postman
@@ -28,77 +20,18 @@ app.get("/", (req, res) => {
 });
 
 // =========== POST for submit project =========== //
-app.post("/api/submit-project", (req, res) => {
-  console.log("Endpoint reached");
 
-  const studentIndex = 10;
-  const projectIndex = 14;
-  const dateSub = "2024-04-17";
-  const img = "/images/submittedProjects/makeProject-screenshot.png";
+// Project library
+app.use(libraryRoutes);
 
-  const query = `UPDATE student_projects SET date_submitted = "${dateSub}", submission = "${img}" WHERE student_id=${studentIndex} AND project_id=${projectIndex};`;
+// Student Profile viewer
+app.use(studentProfileViewerRoutes);
 
-  pool.execute(query, (err, result) => {
-    if (err) {
-      console.log("Database error:", err);
-      return res.status(500).json({
-        errorMessage:
-          "An error occurred while fetching data from the database.",
-      });
-    }
+// Project submissions
+app.use(projectSubmissions);
 
-    console.log(result);
-    res.send(result);
-  });
-});
-
-// =========== GET for project submission =========== //
-
-app.get("/api/project-submission", (req, res) => {
-  console.log("Submission endpoint reached");
-
-  const query = `SELECT student.student_id, student_name, profile_pic, submission, date_submitted, project_id FROM student JOIN student_projects ON student.student_id = student_projects.student_id WHERE date_submitted IS NOT NULL AND date_completed IS NULL;`;
-
-  pool.query(query, (err, result) => {
-    if (err) {
-      console.log("Database error:", err);
-      return res.status(500).json({
-        errorMessage: "An error occured while fetching data from the database.",
-      });
-    } else {
-      res.send(result);
-    }
-  });
-});
-
-// =========== POST for project submission =========== //
-app.post("/api/project-submission", (req, res) => {
-  console.log("/api/project-submission post Endpoint reached");
-
-  // const studentIndex = req.body.studentId;
-  // const projectIndex = req.body.projectId;
-  // const dateComp = req.body.dateComp;
-
-  const studentIndex = 13;
-  const projectIndex = 15;
-  const dateComp = "2024-19-4";
-
-  console.log(studentIndex, projectIndex, dateComp);
-  const query = `UPDATE student_projects SET date_completed = "${dateComp}" WHERE student_id=${studentIndex} AND project_id=${projectIndex};`;
-
-  pool.execute(query, (err, result) => {
-    if (err) {
-      console.log("Database error:", err);
-      return res.status(500).json({
-        errorMessage:
-          "An error occurred while fetching data from the database.",
-      });
-    }
-
-    console.log(result);
-    res.send(result);
-  });
-});
+//Submit project
+app.use(submitProject);
 
 // ============== PORT ============== //
 const PORT = process.env.PORT;
