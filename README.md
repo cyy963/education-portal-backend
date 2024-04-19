@@ -38,7 +38,8 @@ This directory is created by npm and contains all the project dependencies.
 
 ## Optimal Folder Structure for Node.js Projects
 
-![image](https://github.com/Mission-Ready/Mission-X-backend-template/assets/111402381/dbba0e5d-efda-4a04-bb72-1e129970a088)
+![image](https://github.com/Mission-Ready/2402-L4FT13-missionx-backend-t3/assets/111402381/45bf808f-b38b-46e7-b0ab-cf10e0abea98)
+
 
 
 ## Getting Started
