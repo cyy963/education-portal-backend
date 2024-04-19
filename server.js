@@ -27,7 +27,7 @@ app.get("/", (req, res) => {
 
 //============ teacher-dashboard/student-profiles ============
 app.get('/students',(req,res)=>{
-  pool.query(`SELECT name, profile_pic, student_id FROM \`missionr_2402-L4FT13-team3\`.student;`, (err,result)=>{
+  pool.query(`SELECT student_name, profile_pic, student_id FROM \`missionr_2402-L4FT13-team3\`.student;`, (err,result)=>{
       if (err){
           console.log('database error:', err);
           return res.status(500).json({errorMessage:'an error while fetching the database.'})
@@ -54,7 +54,7 @@ app.get('/project_results',(req,res)=>{
   pool.query(
     `SELECT
       student.student_id,
-      student.name,
+      student.student_name,
       GROUP_CONCAT(student_projects.project_id) AS completed_projects,
       COUNT(student_projects.date_completed) AS total_completed_projects
     FROM
