@@ -1,26 +1,27 @@
 // ====== Packages and imports ====== //
 const express = require("express");
 const app = express();
+const cors = require("cors");
 require("dotenv").config();
-// get the client
-const mysql = require("mysql2");
 
-// Create the connection to database
-const pool = mysql.createConnection({
-  host: process.env.MYSQL_HOST,
-  user: process.env.MYSQL_USER,
-  password: process.env.MYSQL_PASSWORD,
-  database: process.env.MYSQL_DATABASE,
-  waitForConnections: true, // people can wait
-  connectionLimit: 10, // 10 slots at one time
-  queueLimit: 0, // no limit for queuing
-});
+// Route Imports
+const libraryRoutes = require("./routes/libraryRoutes.js");
+const studentProfileViewerRoutes = require("./routes/studentProfileViewerRoutes.js");
+
+// Middleware
+app.use(cors());
 
 // =========== ENDPOINTS =========== //
 // Initial setup in Postman
 app.get("/", (req, res) => {
   res.send("Hello, World!");
 });
+
+// Project library
+app.use(libraryRoutes);
+
+// Student Profile viewer
+app.use(studentProfileViewerRoutes);
 
 // ============== PORT ============== //
 const PORT = process.env.PORT;
