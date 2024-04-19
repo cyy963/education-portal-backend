@@ -7,6 +7,8 @@ require("dotenv").config();
 // Route Imports
 const libraryRoutes = require("./routes/libraryRoutes.js");
 const studentProfileViewerRoutes = require("./routes/studentProfileViewerRoutes.js");
+const studentProfilesRoutes = require("./routes/studentProfilesRoutes.js");
+const progressTrackerRoutes = require("./routes/progressTrackerRoutes.js");
 
 // Middleware
 app.use(cors());
@@ -22,6 +24,12 @@ app.use(libraryRoutes);
 
 // Student Profile viewer
 app.use(studentProfileViewerRoutes);
+
+// progress tracker
+app.use(progressTrackerRoutes);
+
+// student profiles
+app.use(studentProfilesRoutes);
 
 // ============== PORT ============== //
 const PORT = process.env.PORT;
