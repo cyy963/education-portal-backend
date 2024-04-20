@@ -3,12 +3,13 @@ const router = express.Router();
 const pool = require("../model/db.js");
 
 router.post("/api/submit-project", (req, res) => {
-  console.log("Endpoint reached");
+  console.log("api/submit-project Endpoint reached");
+  console.log(req.body);
 
-  const studentIndex = 10;
-  const projectIndex = 14;
-  const dateSub = "2024-04-17";
-  const img = "/images/submittedProjects/makeProject-screenshot.png";
+  const studentIndex = req.body.studentId;
+  const projectIndex = req.body.projectId;
+  const dateSub = req.body.img;
+  const img = req.body.img;
 
   const query = `UPDATE student_projects SET date_submitted = "${dateSub}", submission = "${img}" WHERE student_id=${studentIndex} AND project_id=${projectIndex};`;
 

@@ -12,6 +12,7 @@ const submitProject = require("./routes/submitProject.js");
 
 // Middleware
 app.use(cors());
+app.use(express.json());
 
 // =========== ENDPOINTS =========== //
 // Initial setup in Postman
