@@ -5,7 +5,7 @@ const pool = require("../model/db.js");
 router.get("/api/project-submission", (req, res) => {
   console.log("Submission endpoint reached");
 
-  const query = `SELECT student.student_id, student_name, profile_pic, submission, date_submitted, project_id FROM student JOIN student_projects ON student.student_id = student_projects.student_id WHERE date_submitted IS NOT NULL AND date_completed IS NULL;`;
+  const query = `SELECT student.student_id, student_name, profile_pic, gender, submission, date_submitted, project_id FROM student JOIN student_projects ON student.student_id = student_projects.student_id WHERE date_submitted IS NOT NULL AND date_completed IS NULL;`;
 
   pool.query(query, (err, result) => {
     if (err) {
