@@ -22,13 +22,9 @@ router.get("/api/project-submission", (req, res) => {
 router.post("/api/project-submission", (req, res) => {
   console.log("/api/project-submission post Endpoint reached");
 
-  // const studentIndex = req.body.studentId;
-  // const projectIndex = req.body.projectId;
-  // const dateComp = req.body.dateComp;
-
-  const studentIndex = 13;
-  const projectIndex = 15;
-  const dateComp = "2024-19-4";
+  const studentIndex = req.body.studentId;
+  const projectIndex = req.body.projectId;
+  const dateComp = req.body.dateComp;
 
   console.log(studentIndex, projectIndex, dateComp);
   const query = `UPDATE student_projects SET date_completed = "${dateComp}" WHERE student_id=${studentIndex} AND project_id=${projectIndex};`;
