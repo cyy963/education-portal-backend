@@ -8,7 +8,7 @@ router.post("/api/submit-project", (req, res) => {
 
   const studentIndex = req.body.studentId;
   const projectIndex = req.body.projectId;
-  const dateSub = req.body.img;
+  const dateSub = req.body.dateSub;
   const img = req.body.img;
 
   const query = `UPDATE student_projects SET date_submitted = "${dateSub}", submission = "${img}" WHERE student_id=${studentIndex} AND project_id=${projectIndex};`;
