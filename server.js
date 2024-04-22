@@ -1,13 +1,14 @@
 // ====== Packages and imports ====== //
 const express = require("express");
-const cors = require("cors");
+const cors = require("cors"); // Import cors middleware once
 const app = express();
-const cors = require("cors");
 require("dotenv").config();
 
 // Route Imports
 const libraryRoutes = require("./routes/libraryRoutes.js");
 const studentProfileViewerRoutes = require("./routes/studentProfileViewerRoutes.js");
+const teacherProfileViewerRoutes = require("./routes/teacherProfileViewerRoutes.js");
+const helpRequestsRoutes = require("./routes/helpRequestsRoutes.js");
 
 // Middleware
 app.use(cors());
@@ -23,6 +24,12 @@ app.use(libraryRoutes);
 
 // Student Profile viewer
 app.use(studentProfileViewerRoutes);
+
+// Teacher Profile Viewer
+app.use(teacherProfileViewerRoutes);
+
+// Help Requests
+app.use(helpRequestsRoutes);
 
 // ============== PORT ============== //
 const PORT = process.env.PORT;
