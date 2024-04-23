@@ -9,9 +9,14 @@ const libraryRoutes = require("./routes/libraryRoutes.js");
 const studentProfileViewerRoutes = require("./routes/studentProfileViewerRoutes.js");
 const teacherProfileViewerRoutes = require("./routes/teacherProfileViewerRoutes.js");
 const helpRequestsRoutes = require("./routes/helpRequestsRoutes.js");
+const projectSubmissions = require("./routes/projectSubmissions.js");
+const submitProject = require("./routes/submitProject.js");
+const askForHelp = require("./routes/askForHelpRoutes.js");
+
 
 // Middleware
 app.use(cors());
+app.use(express.json());
 
 // =========== ENDPOINTS =========== //
 // Initial setup in Postman
@@ -25,11 +30,22 @@ app.use(libraryRoutes);
 // Student Profile viewer
 app.use(studentProfileViewerRoutes);
 
+
 // Teacher Profile Viewer
 app.use(teacherProfileViewerRoutes);
 
 // Help Requests
 app.use(helpRequestsRoutes);
+
+// Project submissions
+app.use(projectSubmissions);
+
+//Submit project
+app.use(submitProject);
+
+// Ask for help
+app.use(askForHelp);
+
 
 // ============== PORT ============== //
 const PORT = process.env.PORT;
