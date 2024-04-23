@@ -5,6 +5,7 @@ const pool = require("../model/db.js");
 router.get("/api/project-submission", (req, res) => {
   console.log("Submission endpoint reached");
 
+  //Get the student_id, student_name, profile_pic, gender, submission, date_submitted and project_id from student_projects and studetn
   const query = `SELECT student.student_id, student_name, profile_pic, gender, submission, date_submitted, project_id FROM student JOIN student_projects ON student.student_id = student_projects.student_id  WHERE date_submitted IS NOT NULL AND date_completed IS NULL ORDER BY date_submitted;`;
 
   pool.query(query, (err, result) => {
@@ -26,7 +27,7 @@ router.post("/api/project-submission", (req, res) => {
   const projectIndex = req.body.projectId;
   const dateComp = req.body.dateComp;
 
-  console.log(studentIndex, projectIndex, dateComp);
+  // updates the date_completed collumn where the student_id and project_id match the supplied ids
   const query = `UPDATE student_projects SET date_completed = "${dateComp}" WHERE student_id=${studentIndex} AND project_id=${projectIndex};`;
 
   pool.execute(query, (err, result) => {
