@@ -7,9 +7,13 @@ require("dotenv").config();
 // Route Imports
 const libraryRoutes = require("./routes/libraryRoutes.js");
 const studentProfileViewerRoutes = require("./routes/studentProfileViewerRoutes.js");
+const projectSubmissions = require("./routes/projectSubmissions.js");
+const submitProject = require("./routes/submitProject.js");
+const askForHelp = require("./routes/askForHelpRoutes.js");
 
 // Middleware
 app.use(cors());
+app.use(express.json());
 
 // =========== ENDPOINTS =========== //
 // Initial setup in Postman
@@ -17,11 +21,22 @@ app.get("/", (req, res) => {
   res.send("Hello, World!");
 });
 
+// =========== POST for submit project =========== //
+
 // Project library
 app.use(libraryRoutes);
 
 // Student Profile viewer
 app.use(studentProfileViewerRoutes);
+
+// Project submissions
+app.use(projectSubmissions);
+
+//Submit project
+app.use(submitProject);
+
+// Ask for help
+app.use(askForHelp);
 
 // ============== PORT ============== //
 const PORT = process.env.PORT;
