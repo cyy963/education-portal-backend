@@ -22,5 +22,54 @@ router.get("/help-requests", (req, res) => {
       res.send(result);
     });
   });
+
+/////// POST for help requests
+
+  router.post("/help-requests", (req, res) => {
+    console.log("/help-requests post Endpoint reached");
+  
+    const studentIndex = req.body.studentId;
+    const requestIndex = req.body.requestId;
+    const done = req.body.done
+  
+    const query = `UPDATE help_request SET done = "${done}" WHERE student_id = ${studentIndex} AND request_id = ${requestIndex}`;
+  
+    pool.execute(query, (err, result) => {
+      if (err) {
+        console.log("Database error:", err);
+        return res.status(500).json({
+          errorMessage:
+            "An error occurred while updating data in the database.",
+        });
+      }
+  
+      console.log("Update successful:", result);
+      res.send(result);
+    });
+});
+
+  // router.post("/help-requests", (req, res) => {
+  //   console.log("/help-requests post Endpoint reached");
+  
+  //   const studentIndex = req.body.studentId;
+  //   const requestIndex = req.body.requestId;
+  //   const dateCret = req.body.dateCret;
+  
+  //   // updates the date_completed collumn where the student_id and project_id match the supplied ids
+  //   const query = `UPDATE help_request SET date_created = "${dateCret}" WHERE student_id = ${studentIndex} AND request_id = ${requestIndex}`;
+  
+  //   pool.execute(query, (err, result) => {
+  //     if (err) {
+  //       console.log("Database error:", err);
+  //       return res.status(500).json({
+  //         errorMessage:
+  //           "An error occurred while fetching data from the database.",
+  //       });
+  //     }
+  
+  //     console.log(result);
+  //     res.send(result);
+  //   });
+  // });
   
   module.exports = router
