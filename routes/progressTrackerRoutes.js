@@ -5,7 +5,7 @@ const pool = require("../model/db.js");
 //============ teacher-dashboard/progress-tracker ============
 //get project_id from project table
 router.get('/projects',(req,res)=>{
-    pool.query(`SELECT project_id FROM \`missionr_2402-L4FT13-team3\`.project;`, (err,result)=>{
+    pool.query(`SELECT project_id FROM project;`, (err,result)=>{
         if (err){
             console.log('database error:', err);
             return res.status(500).json({errorMessage:'an error while fetching the database.'})
@@ -25,7 +25,8 @@ router.get('/projects',(req,res)=>{
       FROM
         student
       LEFT JOIN
-        student_projects ON student.student_id = student_projects.student_id
+        student_projects 
+        ON student.student_id = student_projects.student_id
         AND student_projects.date_completed IS NOT NULL
       GROUP BY
         student.student_id
