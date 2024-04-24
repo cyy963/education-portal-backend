@@ -14,9 +14,6 @@ router.post("/teacher-login", (req, res) => {
 
   // Query the database
   pool.execute(query, [email], (err, result) => {
-    const data = [{ id: `${result[0].teacher_id}` }];
-    console.log("Data: ", data);
-
     // Handle the error
     if (err) {
       console.log("Database error: ", err);
@@ -30,8 +27,11 @@ router.post("/teacher-login", (req, res) => {
       return res.sendStatus(404); // e.g. No user found with that email
     }
 
+    const data = [{ id: `${result[0].teacher_id}` }];
+    console.log("Data: ", data);
+
     bcrypt.compare(password, result[0].password, (err, result) => {
-      if (result) {
+      if (result && data) {
         // return res.sendStatus(200);
         return res.status(200).send(data);
       } else {
@@ -46,15 +46,11 @@ router.post("/student-login", (req, res) => {
   console.log(req.body);
 
   const email = req.body.email; // e.g. billy@thegoat.com
-  console.log(email);
   const password = req.body.password; // e.g. billy123
   const query = `SELECT password, student_id FROM student WHERE email = ?;`;
 
   // Query the database
   pool.execute(query, [email], (err, result) => {
-    const data = [{ id: `${result[0].student_id}` }];
-    console.log("Data: ", data);
-
     // Handle the error
     if (err) {
       console.log("Database error: ", err);
@@ -67,6 +63,9 @@ router.post("/student-login", (req, res) => {
     if (result.length === 0) {
       return res.sendStatus(404); // e.g. No user found with that email
     }
+
+    const data = [{ id: `${result[0].student_id}` }];
+    console.log("Data: ", data);
 
     bcrypt.compare(password, result[0].password, (err, result) => {
       if (result) {
