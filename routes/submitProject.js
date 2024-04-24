@@ -12,7 +12,9 @@ router.post("/api/submit-project", (req, res) => {
   const img = req.body.img;
 
   //updates the date submitted and submission collumns where the student id and project id match those supplied
-  const query = `UPDATE student_projects SET date_submitted = "${dateSub}", submission = "${img}" WHERE student_id=${studentIndex} AND project_id=${projectIndex};`;
+  const query = `UPDATE student_projects SET date_submitted = "${dateSub}" ${
+    img ? `, submission = "${img}"` : ""
+  } WHERE student_id=${studentIndex} AND project_id=${projectIndex};`;
 
   pool.execute(query, (err, result) => {
     if (err) {
