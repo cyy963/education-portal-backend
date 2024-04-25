@@ -14,8 +14,8 @@ const helpRequestsRoutes = require("./routes/helpRequestsRoutes.js");
 const projectSubmissions = require("./routes/projectSubmissions.js");
 const submitProject = require("./routes/submitProject.js");
 const askForHelp = require("./routes/askForHelpRoutes.js");
-const logins = require("./routes/loginRoutes.js");
 const studentDashboard = require("./routes/studentDashboard.js");
+const logins = require("./routes/loginRoutes.js");
 
 // Middleware
 app.use(cors());
@@ -59,6 +59,7 @@ app.use(askForHelp);
 
 // Student dashboard
 app.use(studentDashboard);
+
 
 // ============== PORT ============== //
 const PORT = process.env.PORT;
