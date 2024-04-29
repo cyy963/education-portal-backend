@@ -4,6 +4,7 @@ const pool = require("../model/db.js");
 const bcrypt = require("bcrypt");
 
 //Routes or endpoints
+// Teacher login endpoint
 router.post("/teacher-login", (req, res) => {
   console.log("/teacher-login endpoint hit!");
   console.log(req.body);
@@ -27,20 +28,24 @@ router.post("/teacher-login", (req, res) => {
       return res.sendStatus(404); // e.g. No user found with that email
     }
 
+    // Create and test id array to be sent back
     const data = [{ id: `${result[0].teacher_id}` }];
     console.log("Data: ", data);
 
+    // Compare the password with database password using bcrypt
     bcrypt.compare(password, result[0].password, (err, result) => {
-      if (result && data) {
-        // return res.sendStatus(200);
+      if (result) {
+        // If result is true, send back 200 status and data array with id
         return res.status(200).send(data);
       } else {
+        // Else, send back status 401 (password incorrect)
         return res.sendStatus(401);
       }
     });
   });
 });
 
+// Student login endpoint
 router.post("/student-login", (req, res) => {
   console.log("/student-login endpoint hit!");
   console.log(req.body);
@@ -64,13 +69,17 @@ router.post("/student-login", (req, res) => {
       return res.sendStatus(404); // e.g. No user found with that email
     }
 
+    // Create and test id array to be sent back
     const data = [{ id: `${result[0].student_id}` }];
     console.log("Data: ", data);
 
+    // Compare the password with database password using bcrypt
     bcrypt.compare(password, result[0].password, (err, result) => {
       if (result) {
+        // If result is true, send back 200 status and data array with id
         return res.status(200).send(data);
       } else {
+        // Else, send back status 401 (password incorrect)
         return res.sendStatus(401);
       }
     });

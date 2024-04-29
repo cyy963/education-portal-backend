@@ -7,6 +7,7 @@ router.get(`/student-profile-viewer/:id`, (req, res) => {
   const id = req.params.id;
   console.log(`/student-profile-viewer/${id} was hit!`);
   pool.query(
+    // Get student info and teacher name using JOIN with student and teacher tables on teacher id, to be rendered in student info area on student profile viewer
     `SELECT student.student_id, student.student_name, student.email, student.school, student.course, student.profile_pic, student.date_of_birth, student.contact_number, teacher.teacher_name FROM student JOIN teacher ON student.teacher_id = teacher.teacher_id WHERE student_id = ?;`,
     [id],
     (err, result) => {

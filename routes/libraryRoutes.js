@@ -3,6 +3,7 @@ const router = express.Router();
 const pool = require("../model/db.js");
 
 //Routes or endpoints
+// Route to get projects for rendering
 router.get("/projects", (req, res) => {
   pool.query(
     `SELECT project_id, name, project_pic, activity_type, year_level, course, subscription, subject_matter FROM project;`,
@@ -20,6 +21,7 @@ router.get("/projects", (req, res) => {
   );
 });
 
+// Route to get student name and id for navbar user
 router.get("/student/:id", (req, res) => {
   const id = req.params.id;
   pool.query(
@@ -39,6 +41,7 @@ router.get("/student/:id", (req, res) => {
   );
 });
 
+// Route to get teacher name and id for navbar user
 router.get("/teacher/:id", (req, res) => {
   const id = req.params.id;
   pool.query(
