@@ -14,7 +14,8 @@ const helpRequestsRoutes = require("./routes/helpRequestsRoutes.js");
 const projectSubmissions = require("./routes/projectSubmissions.js");
 const submitProject = require("./routes/submitProject.js");
 const askForHelp = require("./routes/askForHelpRoutes.js");
-const studentDashboard =  require("./routes/studentDashboard.js");
+const studentDashboard = require("./routes/studentDashboard.js");
+const logins = require("./routes/loginRoutes.js");
 
 // Middleware
 app.use(cors());
@@ -25,6 +26,9 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("Hello, World!");
 });
+
+// Log in
+app.use(logins);
 
 // Project library
 app.use(libraryRoutes);

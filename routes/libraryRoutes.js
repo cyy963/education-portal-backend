@@ -3,6 +3,7 @@ const router = express.Router();
 const pool = require("../model/db.js");
 
 //Routes or endpoints
+// Route to get projects for rendering
 router.get("/projects", (req, res) => {
   pool.query(
     `SELECT project_id, name, project_pic, activity_type, year_level, course, subscription, subject_matter FROM project;`,
@@ -20,9 +21,32 @@ router.get("/projects", (req, res) => {
   );
 });
 
-router.get("/student", (req, res) => {
+// Route to get student name and id for navbar user
+router.get("/student/:id", (req, res) => {
+  const id = req.params.id;
   pool.query(
-    `SELECT student.student_id, student.student_name, student.email, student.school, student.course, student.profile_pic, student.date_of_birth, student.contact_number, teacher.teacher_name FROM student JOIN teacher ON student.teacher_id = teacher.teacher_id WHERE student_id = 12;`,
+    `SELECT student_name AS name, profile_pic FROM student WHERE student_id = ?;`,
+    [id],
+    (err, result) => {
+      if (err) {
+        console.log("Database error: ", err);
+        return res.status(500).json({
+          errorMessage:
+            "An error occurred while fetching data from the database.",
+        });
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+// Route to get teacher name and id for navbar user
+router.get("/teacher/:id", (req, res) => {
+  const id = req.params.id;
+  pool.query(
+    `SELECT teacher_name AS name, profile_pic FROM teacher WHERE teacher_id = ?;`,
+    [id],
     (err, result) => {
       if (err) {
         console.log("Database error: ", err);
