@@ -1,8 +1,12 @@
-# Education Website - Backend
+# Student / Teacher Online Portal Website - Backend
 
 ![Node](https://img.shields.io/badge/Node.js-16.0.0-green)
 ![Express](https://img.shields.io/badge/Express-4.17.1-blue)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0.25-blue)
+
+## Introduction
+
+The Level Up Works Website is a Learning Management System that enables school students to get their lesson instructions, request help, and submit work. School teachers can track student progress and manage help requests.
 
 ### Prerequisites
 
@@ -38,10 +42,6 @@
 - [Student Dashboard](#student-dashboard)
 - [Teacher Dashboard](#teacher-dashboard)
 - [License](#license)
-
-## Introduction
-
-The Level Up Works Website is a Learning Management System that enables school students to get their lesson instructions, request help, and submit work. School teachers can track student progress and manage help requests.
 
 ## Features
 
