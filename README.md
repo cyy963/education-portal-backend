@@ -4,11 +4,28 @@
 ![Express](https://img.shields.io/badge/Express-4.17.1-blue)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0.25-blue)
 
-This is the backend of the Education Website project, built with Node.js, Express, and MySQL.
+### Prerequisites
 
-## Demo Website
+- Node.js (v14 or higher)
+- npm (v6 or higher)
+  
+### Installation
 
-The Level Up Works Website is deployed on GitHub Pages. You can access it [here](https://nicolegunn.github.io/education-website-frontend/).
+1. **Clone the Repository:**
+   ```sh
+   git clone https://github.com/cyy963/service-station-frontend
+   cd service-station-frontend
+   ```
+
+2. **Install Dependencies:**
+   ```sh
+   npm install
+   ```
+
+3. **Start the Development Server:**
+   ```sh
+   npm run dev
+   ```
 
 ## Table of Contents
 
